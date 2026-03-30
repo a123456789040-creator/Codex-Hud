@@ -17,6 +17,7 @@
     "terminal"
   ],
   "skills": "./skills/",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Codex HUD",
     "shortDescription": "Sidecar HUD for local Codex sessions",

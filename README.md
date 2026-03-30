@@ -1,14 +1,18 @@
 # Codex HUD
 
-Windows-friendly sidecar HUD for local Codex sessions.
+Windows-friendly sidecar HUD and Codex skill/plugin source for local Codex sessions.
 
-## Included files
+## Repo layout
 
+- `.codex-plugin/plugin.json` - Codex plugin manifest
+- `.app.json` - app manifest placeholder for Codex plugin wiring
+- `.agents/plugins/marketplace.json` - repo-local marketplace entry for this plugin
+- `skills/codex-hud/SKILL.md` - Codex skill trigger and run guide
 - `scripts/codex_hud.py` - main HUD program
 - `scripts/codex_hud.ps1` - PowerShell wrapper
 - `scripts/codex_hud.bat` - Batch wrapper
 
-## What it shows
+## What it does
 
 - single-line, compact 2-line, or expanded full view
 - latest active session file
@@ -23,6 +27,25 @@ Windows-friendly sidecar HUD for local Codex sessions.
 - Windows PowerShell or Command Prompt
 - Python 3.11+
 - Local Codex sessions under `~/.codex/sessions`
+
+## Install
+
+### 1. Clone the repo locally
+
+```powershell
+git clone https://github.com/a123456789040-creator/Codex-Hud.git $env:USERPROFILE\.codex\plugins\codex-hud
+```
+
+### 2. Expose the skill to Codex
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills" | Out-Null
+cmd /c mklink /J "$env:USERPROFILE\.agents\skills\codex-hud" "$env:USERPROFILE\.codex\plugins\codex-hud\skills\codex-hud"
+```
+
+### 3. Restart Codex
+
+Codex discovers skills at startup.
 
 ## Run
 
@@ -73,6 +96,12 @@ Disable ANSI color:
 ```powershell
 python scripts/codex_hud.py --layout single --no-color
 ```
+
+## Repo-local marketplace
+
+This repo includes `.agents/plugins/marketplace.json` as a one-plugin local marketplace definition.
+
+In this repo, the marketplace entry points to `./` because the plugin lives at the repository root. If you vendor this plugin into a larger marketplace under `plugins/codex-hud`, change the marketplace `source.path` to `./plugins/codex-hud`.
 
 ## Notes
 
